@@ -3,8 +3,8 @@ SCORES = {}
 express = require('express')
 app = express()
 
-app.get '/receive', (req, res) ->
-	user_name = req.query.n + Math.random()
+app.get '/slurp/receive', (req, res) ->
+	user_name = req.query.n
 	country = req.query.c
 	tagline = req.query.t
 	score = parseInt(req.query.s)
@@ -17,41 +17,14 @@ app.get '/receive', (req, res) ->
 	data = [user_name, country, tagline, score, best_word, number_of_words, bonus, input_stream, rating_number]
 
 	SCORES[user_name] = data
+	res.header('Cache-Control', 'no-cache')
 	res.send("OK")
 
-app.get '/gather', (req, res) ->
+app.get '/slurp/gather', (req, res) ->
+	res.header('Cache-Control', 'no-cache')
 	res.json(SCORES)
 	SCORES = {}
 
-app.listen(1337)
-console.log('Server running at http://127.0.0.1:1337/')
-
-
-
-
-###
-http = require('http')
-url = require('url')
-querystring = require('querystring')
-
-receive = (req, res) ->
-
-gather = (req, res) ->
-
-handlers =
-	'/receive': receive
-	'/gather': gather
-
-server = http.createServer (req, res) ->
-	pathname = url.parse(req.url).pathname
-	handler = handlers[pathname]
-	
-	if handler
-		handler(req, res)
-	else
-		res.writeHead(404, {'Content-Type': 'text/plain'})
-		res.end('Not Found')
-	
-server.listen(1337, '127.0.0.1')
-console.log('Server running at http://127.0.0.1:1337/')
-###
+# This sets port 80, all interfaces, and a backlog of 10k
+app.listen(80, null, 10000)
+console.log('Server running on port 80')

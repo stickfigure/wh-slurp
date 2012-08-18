@@ -8,9 +8,9 @@
 
   app = express();
 
-  app.get('/receive', function(req, res) {
+  app.get('/slurp/receive', function(req, res) {
     var best_word, bonus, country, data, input_stream, number_of_words, rating_number, score, tagline, user_name;
-    user_name = req.query.n + Math.random();
+    user_name = req.query.n;
     country = req.query.c;
     tagline = req.query.t;
     score = parseInt(req.query.s);
@@ -21,44 +21,18 @@
     rating_number = parseInt(req.query.r);
     data = [user_name, country, tagline, score, best_word, number_of_words, bonus, input_stream, rating_number];
     SCORES[user_name] = data;
+    res.header('Cache-Control', 'no-cache');
     return res.send("OK");
   });
 
-  app.get('/gather', function(req, res) {
+  app.get('/slurp/gather', function(req, res) {
+    res.header('Cache-Control', 'no-cache');
     res.json(SCORES);
     return SCORES = {};
   });
 
-  app.listen(1337);
+  app.listen(80, null, 10000);
 
-  console.log('Server running at http://127.0.0.1:1337/');
-
-  /*
-  http = require('http')
-  url = require('url')
-  querystring = require('querystring')
-  
-  receive = (req, res) ->
-  
-  gather = (req, res) ->
-  
-  handlers =
-  	'/receive': receive
-  	'/gather': gather
-  
-  server = http.createServer (req, res) ->
-  	pathname = url.parse(req.url).pathname
-  	handler = handlers[pathname]
-  	
-  	if handler
-  		handler(req, res)
-  	else
-  		res.writeHead(404, {'Content-Type': 'text/plain'})
-  		res.end('Not Found')
-  	
-  server.listen(1337, '127.0.0.1')
-  console.log('Server running at http://127.0.0.1:1337/')
-  */
-
+  console.log('Server running on port 80');
 
 }).call(this);
