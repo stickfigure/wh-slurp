@@ -1,4 +1,5 @@
 SCORES = {}
+COUNT = 0
 
 express = require('express')
 app = express()
@@ -17,13 +18,19 @@ app.get '/slurp/receive', (req, res) ->
 	data = [user_name, country, tagline, score, best_word, number_of_words, bonus, input_stream, rating_number]
 
 	SCORES[user_name] = data
+	COUNT++
+	
 	res.header('Cache-Control', 'no-cache')
 	res.send("OK")
+	
+	if COUNT % 1000 == 0
+		console.log("Received %{COUNT}")
 
 app.get '/slurp/gather', (req, res) ->
 	res.header('Cache-Control', 'no-cache')
 	res.json(SCORES)
 	SCORES = {}
+	COUNT = 0
 
 # This sets port 80, all interfaces, and a backlog of 10k
 app.listen(80, null, 10000)
