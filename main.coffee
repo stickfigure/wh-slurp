@@ -20,13 +20,14 @@ app.get '/slurp/receive', (req, res) ->
 	SCORES[user_name] = data
 	COUNT++
 	
-	res.header('Cache-Control', 'no-cache')
-	res.send("OK")
-	
 	if COUNT % 1000 == 0
 		console.log("Received #{COUNT}")
 
+	res.header('Cache-Control', 'no-cache')
+	res.send("OK")
+	
 app.get '/slurp/gather', (req, res) ->
+	console.log("Gathering #{COUNT}")
 	res.header('Cache-Control', 'no-cache')
 	res.json(SCORES)
 	SCORES = {}

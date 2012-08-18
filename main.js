@@ -24,14 +24,15 @@
     data = [user_name, country, tagline, score, best_word, number_of_words, bonus, input_stream, rating_number];
     SCORES[user_name] = data;
     COUNT++;
-    res.header('Cache-Control', 'no-cache');
-    res.send("OK");
     if (COUNT % 1000 === 0) {
-      return console.log("Received " + COUNT);
+      console.log("Received " + COUNT);
     }
+    res.header('Cache-Control', 'no-cache');
+    return res.send("OK");
   });
 
   app.get('/slurp/gather', function(req, res) {
+    console.log("Gathering " + COUNT);
     res.header('Cache-Control', 'no-cache');
     res.json(SCORES);
     SCORES = {};
