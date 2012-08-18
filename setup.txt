@@ -1,0 +1,42 @@
+Setup instructions for a slurp node:
+
+aptitude update
+aptitude upgrade
+ - for menu.lst modification, use package maintainer's version
+aptitude install nodejs npm git
+git clone https://github.com/stickfigure/wh-slurp.git
+npm install -g express
+
+for benchmarking:
+aptitude install apache2-utils
+
+--------------
+Add /etc/security/limits.d/slurp.conf:
+root            hard    nofile            100000
+root            soft    nofile            100000
+
+--------------
+Add /etc/init/slurp.conf:
+description "slurp node.js server"
+author      "jeff"
+ 
+# used to be: start on startup
+# until we found some mounts weren't ready yet while booting:
+start on started mountall
+stop on shutdown
+ 
+# Automatically Respawn:
+respawn
+respawn limit 99 5
+
+script
+    # Not sure why $HOME is needed, but we found that it is:
+    export HOME="/root"
+ 
+    exec /usr/bin/node $HOME/wh-slurp/main.js >> /var/log/node.log 2>&1
+end script
+ 
+post-start script
+   # Optionally put a script here that will notifiy you node has (re)started
+   # /root/bin/hoptoad.sh "node.js has started!"
+end script
