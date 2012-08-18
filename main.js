@@ -27,7 +27,7 @@
     res.header('Cache-Control', 'no-cache');
     res.send("OK");
     if (COUNT % 1000 === 0) {
-      return console.log("Received %{COUNT}");
+      return console.log("Received " + COUNT);
     }
   });
 

@@ -24,7 +24,7 @@ app.get '/slurp/receive', (req, res) ->
 	res.send("OK")
 	
 	if COUNT % 1000 == 0
-		console.log("Received %{COUNT}")
+		console.log("Received #{COUNT}")
 
 app.get '/slurp/gather', (req, res) ->
 	res.header('Cache-Control', 'no-cache')
