@@ -24,7 +24,7 @@
     data = [user_name, country, tagline, score, best_word, number_of_words, bonus, input_stream, rating_number];
     SCORES[user_name] = data;
     COUNT++;
-    if (COUNT % 1000 === 0) {
+    if (COUNT % 500 === 0) {
       console.log("Received " + COUNT);
     }
     res.header('Cache-Control', 'no-cache');
@@ -39,7 +39,7 @@
     return COUNT = 0;
   });
 
-  app.listen(80, null, 10000);
+  app.listen(80, null, 50000);
 
   console.log('Server running on port 80');
 

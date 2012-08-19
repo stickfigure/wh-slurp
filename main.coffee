@@ -20,7 +20,7 @@ app.get '/slurp/receive', (req, res) ->
 	SCORES[user_name] = data
 	COUNT++
 	
-	if COUNT % 1000 == 0
+	if COUNT % 500 == 0
 		console.log("Received #{COUNT}")
 
 	res.header('Cache-Control', 'no-cache')
@@ -33,6 +33,6 @@ app.get '/slurp/gather', (req, res) ->
 	SCORES = {}
 	COUNT = 0
 
-# This sets port 80, all interfaces, and a backlog of 10k
-app.listen(80, null, 10000)
+# This sets port 80, all interfaces, and a backlog of 50k
+app.listen(80, null, 50000)
 console.log('Server running on port 80')
