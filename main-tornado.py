@@ -35,8 +35,8 @@ class GatherHandler(tornado.web.RequestHandler):
 		self.write(json.dumps(oldScores))
 
 application = tornado.web.Application([
-    (r"/receive", ReceiveHandler),
-    (r"/gather", GatherHandler)
+    (r"/slurp/receive", ReceiveHandler),
+    (r"/slurp/gather", GatherHandler)
 ])
 
 if __name__ == "__main__":
