@@ -32,13 +32,13 @@
     }
     res.header('Content-Type', 'application/json');
     res.header('Cache-Control', 'no-cache');
-    return res.send("{'s':'OK'}");
+    return res.send('{"s":"OK"}');
   });
 
   app.get('/slurp/gather', function(req, res) {
     var now;
     now = new Date();
-    console.log(now + (": Gathering " + COUNT + ", last submit was ") + now.getTime() - LAST.getTime()(" + ms ago"));
+    console.log(now + (": Gathering " + COUNT + ", last submit was ") + (now.getTime() - LAST.getTime()) + " ms ago");
     res.header('Content-Type', 'application/json');
     res.header('Cache-Control', 'no-cache');
     res.json(SCORES);
