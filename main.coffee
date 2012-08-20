@@ -1,5 +1,6 @@
 SCORES = {}
 COUNT = 0
+LAST = null
 
 express = require('express')
 app = express()
@@ -19,15 +20,18 @@ app.get '/slurp/receive', (req, res) ->
 
 	SCORES[user_name] = data
 	COUNT++
+	LAST = new Date()
 	
 	if COUNT % 500 == 0
-		console.log("Received #{COUNT}")
+		console.log(LAST + ": Received #{COUNT}")
 
+	res.header('Content-Type', 'application/json')
 	res.header('Cache-Control', 'no-cache')
-	res.send("OK")
+	res.send("{'s':'OK'}")
 	
 app.get '/slurp/gather', (req, res) ->
-	console.log("Gathering #{COUNT}")
+	console.log(new Date() + ": Gathering #{COUNT}, last submit was " + LAST)
+	res.header('Content-Type', 'application/json')
 	res.header('Cache-Control', 'no-cache')
 	res.json(SCORES)
 	SCORES = {}
@@ -35,4 +39,4 @@ app.get '/slurp/gather', (req, res) ->
 
 # This sets port 80, all interfaces, and a backlog of 50k
 app.listen(80, null, 50000)
-console.log('Server running on port 80')
+console.log(new Date() + ': Server running on port 80')
