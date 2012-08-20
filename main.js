@@ -36,7 +36,9 @@
   });
 
   app.get('/slurp/gather', function(req, res) {
-    console.log(new Date() + (": Gathering " + COUNT + ", last submit was ") + LAST);
+    var now;
+    now = new Date();
+    console.log(now + (": Gathering " + COUNT + ", last submit was ") + now.getTime() - LAST.getTime()(" + ms ago"));
     res.header('Content-Type', 'application/json');
     res.header('Cache-Control', 'no-cache');
     res.json(SCORES);

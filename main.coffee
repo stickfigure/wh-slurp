@@ -30,7 +30,8 @@ app.get '/slurp/receive', (req, res) ->
 	res.send("{'s':'OK'}")
 	
 app.get '/slurp/gather', (req, res) ->
-	console.log(new Date() + ": Gathering #{COUNT}, last submit was " + LAST)
+	now = new Date()
+	console.log(now + ": Gathering #{COUNT}, last submit was " + now.getTime() - LAST.getTime() " + ms ago")
 	res.header('Content-Type', 'application/json')
 	res.header('Cache-Control', 'no-cache')
 	res.json(SCORES)
