@@ -31,7 +31,11 @@ app.get '/slurp/receive', (req, res) ->
 	
 app.get '/slurp/gather', (req, res) ->
 	now = new Date()
-	console.log(now + ": Gathering #{COUNT}, last submit was " + (now.getTime() - LAST.getTime()) + " ms ago")
+	if LAST
+		console.log(now + ": Gathering #{COUNT}, last submit was " + (now.getTime() - LAST.getTime()) + " ms ago")
+	else
+		consle.log("Gathering but nothing has been submitted yet"); 
+		
 	res.header('Content-Type', 'application/json')
 	res.header('Cache-Control', 'no-cache')
 	res.json(SCORES)
