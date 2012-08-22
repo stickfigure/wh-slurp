@@ -1,3 +1,11 @@
+How to get new slurp code that is in the wh-slurp git repo:
+cd wh-slurp; git pull
+
+How to restart (or stop, or start) slurp server:
+restart slurp
+stop slurp
+start slurp
+
 Setup instructions for a slurp node:
 
 aptitude update
