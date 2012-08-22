@@ -41,7 +41,7 @@
     if (LAST) {
       console.log(now + (": Gathering " + COUNT + ", last submit was ") + (now.getTime() - LAST.getTime()) + " ms ago");
     } else {
-      console.log("Gathering but nothing has been submitted yet");
+      console.log(now + ": Gathering but nothing has been submitted yet");
     }
     res.header('Content-Type', 'application/json');
     res.header('Cache-Control', 'no-cache');
